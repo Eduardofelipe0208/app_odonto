@@ -1,0 +1,20 @@
+{
+    "name": "eduardo/app_odonto",
+    "description": "Proyecto App Salón Odontológico",
+    "type": "project",
+    "autoload": {
+    "psr-4": {
+        "MVC\\": "./",
+        "Controllers\\": "./controllers/",
+        "Model\\": "./models/",
+        "Classes\\": "./classes/"
+    }
+},
+    "authors": [
+        {
+            "name": "Eduardo Marcano",
+            "email": "tu-email@correo.com"
+        }
+    ],
+    "require": {}
+}

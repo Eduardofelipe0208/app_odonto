@@ -1,0 +1,38 @@
+html {
+    font-size: 62.5%; // 1rem = 10px
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: $fuente-principal;
+    font-size: 1.6rem;
+    background-color: $azul;
+    color: $negro;
+    margin: 0;
+}
+
+.contenedor-app {
+    display: flex;
+    height: 100vh;
+
+    .imagen {
+        flex: 0 0 40%; // 40% de ancho para la imagen
+        background-image: url('../img/dentista.jpg'); // Asegúrate de tener una imagen aquí
+        background-size: cover;
+        background-position: center;
+        display: none; // Se oculta en móvil
+
+        @media (min-width: $tablet) {
+            display: block;
+        }
+    }
+
+    .app {
+        flex: 1; // Toma el resto del espacio
+        padding: 4rem;
+        overflow-y: scroll;
+    }
+}

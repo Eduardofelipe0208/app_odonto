@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kano Dent  | Gestión Odontológica Avanzada</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .admin-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+        .hidden-section { display: none; }
+        .active-section { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <nav class="fixed w-full z-50 glass border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('home')">
+                <i data-lucide="shield-plus" class="text-blue-600 w-8 h-8"></i>
+                <span class="text-2xl font-bold text-slate-800">Kano<span class="text-blue-600">Dent</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="javascript:void(0)" onclick="showSection('home')" class="hover:text-blue-600 font-medium">Inicio</a>
+                <a href="javascript:void(0)" onclick="showSection('booking')" class="hover:text-blue-600 font-medium">Reservar</a>
+                <div id="auth-buttons" class="flex gap-4">
+                    <button onclick="showSection('login')" class="text-slate-600 font-medium">Admin Login</button>
+                    <button onclick="showSection('booking')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Nueva Cita</button>
+                </div>
+                <div id="admin-nav" class="hidden flex gap-4">
+                    <button onclick="showSection('admin-panel')" class="text-blue-600 font-bold flex items-center gap-1">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+                    </button>
+                    <button onclick="logout()" class="text-red-500 hover:text-red-700 font-medium">Salir</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="home" class="active-section pt-20">
+        <section class="relative h-[90vh] flex items-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="./img/odontologia.jpg" class="w-full h-full object-cover opacity-20" alt="Consultorio">
+            </div>
+            <div class="max-w-7xl mx-auto px-4 z-10">
+                <h1 class="text-5xl md:text-7xl font-bold text-slate-900 mb-6">Salud dental <br><span class="text-blue-600">de última generación.</span></h1>
+                <p class="text-xl text-slate-600 max-w-xl mb-10">Gestiona tus citas de forma inteligente. Barquisimeto, Lara.</p>
+                <div class="flex gap-4">
+                    <button onclick="showSection('booking')" class="bg-blue-600 text-white text-lg px-10 py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-all flex items-center gap-2">
+                        Reservar Mi Cita <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="booking" class="hidden-section pt-32 pb-20 px-4">
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+            <div class="bg-blue-600 p-8 text-white">
+                <h2 class="text-3xl font-bold">Reserva tu Turno</h2>
+                <p class="opacity-80">Completa los datos para agendar tu visita.</p>
+            </div>
+            <form id="appointmentForm" class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Servicio</label>
+                        <select id="service" required class="w-full p-3 bg-slate-50 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="">Seleccione...</option>
+                            <option value="Limpieza">Limpieza Ultrasónica</option>
+                            <option value="Blanqueamiento">Blanqueamiento LED</option>
+                            <option value="Ortodoncia">Consulta Ortodoncia</option>
+                            <option value="Implante">Cirugía de Implante</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Fecha</label>
+                        <input type="text" id="date" required class="w-full p-3 bg-slate-50 border rounded-lg" placeholder="Seleccionar día">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Hora Disponible</label>
+                        <select id="time" required class="w-full p-3 bg-slate-50 border rounded-lg">
+                            <option value="08:00">08:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Nombre Completo</label>
+                        <input type="text" id="name" required class="w-full p-3 bg-slate-50 border rounded-lg" placeholder="Ej. Carlos López">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 shadow-md">
+                    Confirmar Reservación
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section id="login" class="hidden-section pt-40 pb-20 px-4">
+        <div class="max-w-md mx-auto bg-white p-10 rounded-2xl shadow-2xl border border-slate-100">
+            <h2 class="text-3xl font-bold text-center mb-8">Acceso Admin</h2>
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold mb-2">Usuario</label>
+                    <input type="text" id="adminUser" class="w-full p-4 bg-slate-50 border rounded-xl" placeholder="admin">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Contraseña</label>
+                    <input type="password" id="adminPass" class="w-full p-4 bg-slate-50 border rounded-xl" placeholder="••••••">
+                </div>
+                <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800">
+                    Entrar al Panel
+                </button>
+                <p class="text-center text-xs text-slate-400 mt-4">Demo: admin / 123456</p>
+            </form>
+        </div>
+    </section>
+
+    <section id="admin-panel" class="hidden-section pt-32 pb-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+                <div>
+                    <h2 class="text-4xl font-bold text-slate-900">Panel de Control</h2>
+                    <p class="text-slate-500">Gestión de citas y pacientes en tiempo real.</p>
+                </div>
+                <div class="flex gap-4 items-center">
+                    <label class="text-sm font-bold">Filtrar por fecha:</label>
+                    <input type="date" id="filterDate" onchange="renderAdminCitas()" class="p-2 border rounded-lg">
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="p-4 font-bold">Paciente</th>
+                            <th class="p-4 font-bold">Servicio</th>
+                            <th class="p-4 font-bold">Fecha</th>
+                            <th class="p-4 font-bold">Hora</th>
+                            <th class="p-4 font-bold text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody" class="divide-y divide-slate-100">
+                        </tbody>
+                </table>
+                <div id="noData" class="hidden p-20 text-center text-slate-400">
+                    <i data-lucide="calendar-x" class="mx-auto w-12 h-12 mb-4"></i>
+                    <p>No hay citas registradas para este criterio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
+    <script>
+        // --- 1. ESTADO DE LA APLICACIÓN ---
+        let citas = JSON.parse(localStorage.getItem('KanoDent_citas')) || [];
+        let isAdmin = false;
+
+        // --- 2. NAVEGACIÓN SPA ---
+        function showSection(sectionId) {
+            document.querySelectorAll('main, section').forEach(s => s.classList.add('hidden-section'));
+            document.querySelectorAll('main, section').forEach(s => s.classList.remove('active-section'));
+            
+            const target = document.getElementById(sectionId);
+            target.classList.remove('hidden-section');
+            target.classList.add('active-section');
+            
+            if(sectionId === 'admin-panel') renderAdminCitas();
+            window.scrollTo(0,0);
+        }
+
+        // --- 3. INICIALIZACIONES ---
+        lucide.createIcons();
+        flatpickr("#date", {
+            locale: "es",
+            minDate: "today",
+            disable: [date => date.getDay() === 0], // Sin domingos
+            dateFormat: "Y-m-d"
+        });
+
+        // --- 4. GESTIÓN DE CITAS (CLIENTE) ---
+        document.getElementById('appointmentForm').onsubmit = (e) => {
+            e.preventDefault();
+            
+            const nuevaCita = {
+                id: Date.now(),
+                nombre: document.getElementById('name').value,
+                servicio: document.getElementById('service').value,
+                fecha: document.getElementById('date').value,
+                hora: document.getElementById('time').value,
+                status: 'Confirmada'
+            };
+
+            // Validación de hora duplicada (Básico)
+            const existe = citas.find(c => c.fecha === nuevaCita.fecha && c.hora === nuevaCita.hora);
+            if(existe) {
+                return Swal.fire('Error', 'Este horario ya está reservado.', 'error');
+            }
+
+            citas.push(nuevaCita);
+            localStorage.setItem('KanoDent_citas', JSON.stringify(citas));
+            
+            Swal.fire({
+                title: '¡Cita Reservada!',
+                text: 'Te esperamos el ' + nuevaCita.fecha,
+                icon: 'success',
+                confirmButtonColor: '#2563eb'
+            }).then(() => {
+                e.target.reset();
+                showSection('home');
+            });
+        };
+
+        // --- 5. AUTENTICACIÓN ---
+        document.getElementById('loginForm').onsubmit = (e) => {
+            e.preventDefault();
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+
+            if(user === 'admin' && pass === '123456') {
+                isAdmin = true;
+                document.getElementById('auth-buttons').classList.add('hidden');
+                document.getElementById('admin-nav').classList.remove('hidden');
+                showSection('admin-panel');
+                Swal.fire('Bienvenido', 'Acceso concedido al panel administrativo', 'success');
+            } else {
+                Swal.fire('Error', 'Credenciales incorrectas', 'error');
+            }
+        };
+
+        function logout() {
+            isAdmin = false;
+            document.getElementById('auth-buttons').classList.remove('hidden');
+            document.getElementById('admin-nav').classList.add('hidden');
+            showSection('home');
+        }
+
+        // --- 6. PANEL ADMINISTRATIVO (LÓGICA) ---
+        function renderAdminCitas() {
+            const tableBody = document.getElementById('adminTableBody');
+            const filterDate = document.getElementById('filterDate').value;
+            const noData = document.getElementById('noData');
+            
+            let citasFiltradas = citas;
+            if(filterDate) {
+                citasFiltradas = citas.filter(c => c.fecha === filterDate);
+            }
+
+            tableBody.innerHTML = '';
+            
+            if(citasFiltradas.length === 0) {
+                noData.classList.remove('hidden');
+            } else {
+                noData.classList.add('hidden');
+                citasFiltradas.sort((a,b) => new Date(a.fecha) - new Date(b.fecha)).forEach(cita => {
+                    tableBody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-4 font-medium text-slate-700">${cita.nombre}</td>
+                            <td class="p-4"><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">${cita.servicio}</span></td>
+                            <td class="p-4 text-slate-600">${cita.fecha}</td>
+                            <td class="p-4 text-slate-600">${cita.hora}</td>
+                            <td class="p-4 text-right space-x-2">
+                                <button onclick="contactarCita('${cita.nombre}')" class="text-emerald-600 hover:text-emerald-800"><i data-lucide="message-circle" class="w-5 h-5 inline"></i></button>
+                                <button onclick="eliminarCita(${cita.id})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-5 h-5 inline"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            lucide.createIcons();
+        }
+
+        function eliminarCita(id) {
+            Swal.fire({
+                title: '¿Eliminar cita?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                confirmButtonText: 'Sí, eliminar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    citas = citas.filter(c => c.id !== id);
+                    localStorage.setItem('KanoDent_citas', JSON.stringify(citas));
+                    renderAdminCitas();
+                    Swal.fire('Eliminado', 'La cita ha sido borrada.', 'success');
+                }
+            });
+        }
+
+        function contactarCita(nombre) {
+            Swal.fire('Contactar', `Abriendo chat de WhatsApp para ${nombre}...`, 'info');
+        }
+    </script>
+</body>
+</html>
