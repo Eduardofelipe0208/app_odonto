@@ -1,38 +1,19 @@
-html {
-    font-size: 62.5%; // 1rem = 10px
-    box-sizing: border-box;
-}
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
-body {
-    font-family: $fuente-principal;
-    font-size: 1.6rem;
-    background-color: $azul;
-    color: $negro;
-    margin: 0;
-}
-
-.contenedor-app {
-    display: flex;
-    height: 100vh;
-
-    .imagen {
-        flex: 0 0 40%; // 40% de ancho para la imagen
-        background-image: url('../img/dentista.jpg'); // Asegúrate de tener una imagen aquí
-        background-size: cover;
-        background-position: center;
-        display: none; // Se oculta en móvil
-
-        @media (min-width: $tablet) {
-            display: block;
-        }
-    }
-
-    .app {
-        flex: 1; // Toma el resto del espacio
-        padding: 4rem;
-        overflow-y: scroll;
-    }
+.imagen-fondo-hero {
+    // 1. Posicionamiento (Para que quede al fondo de todo)
+    position: absolute;
+    inset: 0; // Ocupa todo el alto y ancho (top, bottom, left, right 0)
+    z-index: 0; // Lo manda detrás del texto
+    
+    // 2. Aquí llamas a tu imagen (con la ruta segura de XAMPP)
+    background-image: url('../img/odonto.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    // 3. El truco del degradado: Le bajamos la opacidad para que se mezcle 
+    // con el fondo oscuro del section que definimos en el HTML
+    opacity: 0.3; 
+    
+    // Si algún día quieres agregarle un filtro borroso, solo descomenta esta línea:
+    // filter: blur(2px);
 }

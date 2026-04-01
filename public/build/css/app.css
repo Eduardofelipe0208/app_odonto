@@ -1,38 +1,36 @@
-html {
-  font-size: 62.5%;
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  font-size: 1.6rem;
-  background-color: #0da6f3;
-  color: #1a1a1a;
-  margin: 0;
-}
-
-.contenedor-app {
-  display: flex;
-  height: 100vh;
-}
-.contenedor-app .imagen {
-  flex: 0 0 40%;
-  background-image: url("../img/dentista.jpg");
+.imagen-fondo-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../img/odonto.jpg");
   background-size: cover;
   background-position: center;
-  display: none;
+  background-repeat: no-repeat;
+  opacity: 0.3;
 }
-@media (min-width: 768px) {
-  .contenedor-app .imagen {
-    display: block;
-  }
+
+.btn-reservar-hero {
+  background-color: #2563eb;
+  color: #c60000;
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 1rem 2.5rem;
+  border-radius: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
 }
-.contenedor-app .app {
-  flex: 1;
-  padding: 4rem;
-  overflow-y: scroll;
+.btn-reservar-hero:hover {
+  background-color: #0f172a;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(139, 220, 99, 0.4);
+}
+.btn-reservar-hero i {
+  transition: transform 0.3s ease;
+}
+.btn-reservar-hero:hover i {
+  transform: translateX(5px);
 }

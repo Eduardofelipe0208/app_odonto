@@ -1,0 +1,38 @@
+.btn-reservar-hero {
+    // Colores y tipografía
+    background-color: $azul-kano; // Azul Tailwind
+    color: #c60000;
+    font-size: 1.125rem;
+    font-weight: 600;
+    
+    // Espaciado y forma
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    
+    // Alineación para el texto y el ícono
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    // Sombra y transiciones
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    // ¡La magia del SCSS en el Hover!
+    &:hover {
+        background-color: #0f172a; // Cambia a un azul casi negro
+        transform: translateY(-5px); // El botón "salta" hacia arriba
+        box-shadow: 0 20px 25px -5px rgba(139, 220, 99, 0.4); // Sombra azul brillante
+    }
+
+    // Estilo extra para el ícono de Lucide
+    i {
+        transition: transform 0.3s ease;
+    }
+
+    // Hace que la flecha se mueva a la derecha al pasar el mouse
+    &:hover i {
+        transform: translateX(5px);
+    }
+}

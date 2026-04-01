@@ -16,12 +16,22 @@ function javascript(done) {
     done();
 }
 
+function imagenes(done) {
+    src('src/img/**/*')
+        .pipe(dest('public/build/img'));
+    done();
+}
+
 function dev(done) {
     watch('src/scss/**/*.scss', css);
     watch('src/js/**/*.js', javascript);
+    watch('src/img/**/*', imagenes); // <-- 1. Faltaba decirle a Gulp que vigile las imágenes
     done();
 }
 
 exports.css = css;
 exports.js = javascript;
-exports.default = parallel(css, javascript, dev);
+exports.imagenes = imagenes; // <-- 2. Faltaba exportar la función
+
+// 3. Faltaba meter "imagenes" dentro del parallel para que arranque al escribir 'gulp'
+exports.default = parallel(css, javascript, imagenes, dev);
